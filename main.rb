@@ -7,8 +7,7 @@ TIME_FMT = "%Y-%m-%d %H:%M:%S %Z"
 class Report
   @client = nil
 
-  attr_reader :new_issues
-  attr_reader :new_pull_requests
+  attr_reader :new_issues, :new_pull_requests
 
   def initialize
     @client = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
