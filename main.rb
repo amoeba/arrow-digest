@@ -16,9 +16,10 @@ class Report
   end
 
   def set_time_range
-    now = Time.now.utc
-    @since = Time.new(now.year, now.month, now.day - 1, 0, 0, 0, "UTC")
-    @until = Time.new(now.year, now.month, now.day, 0, 0, 0, "UTC")
+    now = Time.now
+    @since = Time.new(now.year, now.month, now.day - 1, 0, 0, 0)
+    @until = Time.new(now.year, now.month, now.day, 0, 0, 0)
+    @day = @since.strftime("%Y/%m/%d")
   end
 
   def fetch_data
@@ -37,15 +38,24 @@ class Report
       since: @since.strftime(TIME_FMT)
     }).filter { |i| i[:created_at] >= @since && i[:created_at] < @until }
   end
+
+  def print
+    puts "Report for #{@day}"
+    puts ""
+    puts "NEW ISSUES"
+    puts "----------"
+    @new_issues.each do |issue|
+      puts issue[:title]
+    end
+    puts ""
+    puts "NEW PULL REQUESTS"
+    puts "-----------------"
+    @new_pull_requests.each do |pull|
+      puts pull[:title]
+    end
+  end
 end
 
 report = Report.new
 report.fetch_data
-
-report.new_issues.each do |issue|
-  puts issue[:title]
-end
-
-report.new_pull_requests.each do |pull|
-  puts pull[:title]
-end
+report.print
