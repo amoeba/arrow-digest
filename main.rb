@@ -45,13 +45,13 @@ class Report
     puts "NEW ISSUES"
     puts "----------"
     @new_issues.each do |issue|
-      puts issue[:title]
+      puts "#{issue[:title]} https://github.com/apache/arrow/issues/#{issue[:number]}"
     end
     puts ""
     puts "NEW PULL REQUESTS"
     puts "-----------------"
     @new_pull_requests.each do |pull|
-      puts pull[:title]
+      puts "#{pull[:title]} https://github.com/apache/arrow/pull/#{pull[:number]}"
     end
   end
 end
